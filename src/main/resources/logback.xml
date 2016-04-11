@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}][%-5level][%logger{0}:%L] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="basic" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- deploy to tomcat default create in tomcat\bin\-->
+        <!--        <file>../../logs/basic.log</file>-->
+        <!-- / is the disk root (such as f:/) -->
+        <file>/tomcat7/logs/basic.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}][%-5level][%logger:%L] - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--            <fileNamePattern>../../logs/basic.log.%d{yyyy-MM-dd}</fileNamePattern>-->
+            <fileNamePattern>/tomcat7/logs/basic.log.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="cn.wxper.basic" level="DEBUG" >
+        <appender-ref ref="basic"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

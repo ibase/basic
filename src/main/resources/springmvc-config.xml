@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <context:component-scan base-package="cn.wxper.basic.controller" />
+    <mvc:annotation-driven />
+    <mvc:default-servlet-handler/>
+
+    <!-- exception -->
+    <bean class="cn.wxper.basic.exception.CustomExceptionResolver" />
+
+    <!-- freemarker config -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:basic.properties" />
+    </bean>
+
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="whitespace_stripping">${whitespace_stripping}</prop>
+                <prop key="defaultEncoding">${default_encoding}</prop>
+                <prop key="number_format">${number_format}</prop>
+                <prop key="date_format">${date_format}</prop>
+                <prop key="datetime_format">${datetime_format}</prop>
+                <prop key="time_format">${time_format}</prop>
+                <prop key="classic_compatible">${classic_compatible}</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="mediaHost" value="${mediaHost}" />
+                <entry key="mediaRoot" value="${mediaRoot}" />
+                <entry key="jsRoot" value="${jsRoot}" />
+                <entry key="cssRoot" value="${cssRoot}" />
+                <entry key="imgRoot" value="${imgRoot}" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Default ViewResolver -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+    </bean>
+
+</beans>
